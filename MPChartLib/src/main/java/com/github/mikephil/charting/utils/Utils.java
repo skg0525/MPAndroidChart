@@ -543,6 +543,7 @@ public abstract class Utils {
                 mDrawableBoundsCache.left + width,
                 mDrawableBoundsCache.top + width);
 
+
         int saveId = canvas.save();
         // translate to the correct position and draw
         canvas.translate(drawOffset.x, drawOffset.y);

@@ -41,6 +41,8 @@
         <activity android:name="ListViewMultiChartActivity"></activity>
         <activity android:name="StackedBarActivity"></activity>
         <activity android:name="AnotherBarActivity"></activity>
+        <activity android:name="WiFiByDeviceActivity"></activity>
+        <activity android:name="WifiByHouseHoldActivity"></activity>
         <activity android:name="InvertedLineChartActivity"></activity>
         <activity android:name="CandleStickChartActivity"></activity>
         <activity android:name="CubicLineChartActivity"></activity>

@@ -84,6 +84,7 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
 
     private RectF mBarShadowRectBuffer = new RectF();
 
+
     protected void drawDataSet(Canvas c, IBarDataSet dataSet, int index) {
 
         Transformer trans = mChart.getTransformer(dataSet.getAxisDependency());
@@ -128,7 +129,11 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
                 mBarShadowRectBuffer.top = mViewPortHandler.contentTop();
                 mBarShadowRectBuffer.bottom = mViewPortHandler.contentBottom();
 
-                c.drawRect(mBarShadowRectBuffer, mShadowPaint);
+                float mRadius = (mBarShadowRectBuffer.right - mBarShadowRectBuffer.left)/2;
+                if (mRadius > 0.0f)
+                    c.drawRoundRect(mBarShadowRectBuffer, mRadius, mRadius, mShadowPaint);
+                else
+                    c.drawRect(mBarShadowRectBuffer, mShadowPaint);
             }
         }
 
@@ -163,11 +168,20 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
                 mRenderPaint.setColor(dataSet.getColor(j / 4));
             }
 
-            c.drawRect(buffer.buffer[j], buffer.buffer[j + 1], buffer.buffer[j + 2],
+            float mRadius = buffer.buffer[j];
+            if (mRadius > 0)
+                c.drawRoundRect(new RectF(buffer.buffer[j], buffer.buffer[j + 1], buffer.buffer[j + 2],
+                        buffer.buffer[j + 3]), mRadius, mRadius, mRenderPaint);
+            else
+                c.drawRect(buffer.buffer[j], buffer.buffer[j + 1], buffer.buffer[j + 2],
                     buffer.buffer[j + 3], mRenderPaint);
 
             if (drawBorder) {
-                c.drawRect(buffer.buffer[j], buffer.buffer[j + 1], buffer.buffer[j + 2],
+                if (mRadius > 0.0f)
+                    c.drawRoundRect(new RectF(buffer.buffer[j], buffer.buffer[j + 1], buffer.buffer[j + 2],
+                            buffer.buffer[j + 3]), mRadius, mRadius, mBarBorderPaint);
+                else
+                    c.drawRect(buffer.buffer[j], buffer.buffer[j + 1], buffer.buffer[j + 2],
                         buffer.buffer[j + 3], mBarBorderPaint);
             }
         }
@@ -465,7 +479,11 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
 
             setHighlightDrawPos(high, mBarRect);
 
-            c.drawRect(mBarRect, mHighlightPaint);
+            float mRadius = barData.getBarWidth();
+            if (mRadius > 0.0f)
+                c.drawRoundRect(mBarRect,mRadius, mRadius, mHighlightPaint);
+            else
+                c.drawRect(mBarRect, mHighlightPaint);
         }
     }
 
