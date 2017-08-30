@@ -6,35 +6,27 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.XAxis.XAxisPosition;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.xxmassdeveloper.mpchartexample.custom.DayAxisValueFormatter;
-import com.xxmassdeveloper.mpchartexample.custom.MyAxisArrayListValueFormatter;
-import com.xxmassdeveloper.mpchartexample.custom.MyAxisValueFormatter;
+import com.xxmassdeveloper.mpchartexample.customrendererandformater.BarChartAxisArrayListValueFormatter;
+import com.xxmassdeveloper.mpchartexample.customrendererandformater.BarChartXAxisFontIconRenderer;
 import com.xxmassdeveloper.mpchartexample.notimportant.DemoBase;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class WiFiByDeviceActivity extends DemoBase  {
+public class WiFiByDeviceActivity extends DemoBase {
 
-    private BarChart mChart;
+    private BarChart barChartDevices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,195 +35,142 @@ public class WiFiByDeviceActivity extends DemoBase  {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_wifibydevice);
 
+        barChartDevices = (BarChart) findViewById(R.id.chart1);
 
-        mChart = (BarChart) findViewById(R.id.chart1);
+        //PRE-STYLING of bar charts
+        barChartPreDataStyling(barChartDevices);
 
-        mChart.getDescription().setEnabled(false);
-        mChart.getLegend().setEnabled(false);
+        //SET THE DATA
+        setData(barChartDevices, 20, 20);
 
-        // if more than 60 entries are displayed in the chart, no values will be
-        // drawn
-        mChart.setMaxVisibleValueCount(60);
+        //POST styling
+        barChartPostDataStyling(barChartDevices);
+
+    }
+
+    /*
+    * Author: SKG
+    * This method is used to style the bar before setting data
+    */
+    private void barChartPreDataStyling(BarChart chart) {
+        chart.getDescription().setEnabled(false);
+        //chart.getLegend().setEnabled(false);
+        LegendEntry l = new LegendEntry("", Legend.LegendForm.NONE, Float.NaN, Float.NaN, null, Color.BLACK);
+        LegendEntry[] array = new LegendEntry[1];
+        array[0] = l;
+        chart.getLegend().setCustom(array);
+
+        // if more than 80 entries are displayed in the chart, no values will be
+        chart.setMaxVisibleValueCount(80);
 
         // scaling can now only be done on x- and y-axis separately
-        mChart.setPinchZoom(false);
-        mChart.setDoubleTapToZoomEnabled(false);
+        chart.setPinchZoom(false);
+        chart.setDoubleTapToZoomEnabled(false);
 
-        mChart.setDrawBarShadow(false);
+        chart.setDrawBarShadow(false);
         //mChart.setDescription(new Description());
         //mChart.setBackgroundColor(Color.rgb(0, 0, 0));//Set as a black
-        mChart.setDrawGridBackground(false);//set this to true to draw the grid background, false if not
+        chart.setDrawGridBackground(false);//set this to true to draw the grid background, false if not
 
+    }
 
-        setData(12,50);
-        //initialize();
-        //init2();
+    /*
+    * Author: SKG
+    * This method is used to style the bar after setting data
+    */
+    private void barChartPostDataStyling(BarChart chart) {
 
+        int visibleGraphCount = 5;
 
         // below is simply styling decisions on code that I have)
-        mChart.getAxisLeft().setEnabled(false);
-        mChart.getAxisLeft().setDrawGridLines(false);
-        mChart.getAxisLeft().setAxisMinimum(-1.5f);
-        mChart.getAxisRight().setEnabled(false);
+        chart.getAxisLeft().setEnabled(false);
+        chart.getAxisLeft().setDrawGridLines(false);
+        //this is the space between x-axis and bars
+        chart.getAxisLeft().setAxisMinimum(-5.0f);
+        chart.getAxisRight().setEnabled(false);
 
-        XAxis xAxis = mChart.getXAxis();
+        XAxis xAxis = chart.getXAxis();
         // xAxis.setDrawLabels(false);
-        xAxis.setAxisLineColor(Color.BLACK);
+        xAxis.setAxisLineColor(Color.GRAY);
         xAxis.setAxisLineWidth(1.0f);
-        xAxis.setPosition(XAxisPosition.BOTTOM);
-        xAxis.setTextSize(15f);
-        xAxis.setTypeface(mTfLight);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextSize(12f);
+        //set the typrface for text
+        // xAxis.setTypeface(mTfLight);
         xAxis.setTextColor(Color.BLACK);
         xAxis.setDrawAxisLine(true);
         xAxis.setDrawGridLines(false);
 
         ArrayList lables = new ArrayList();
-        lables.add("device1");
+        lables.add("abcdefghijklmnopqrstuvwxyz");
         lables.add("device2");
         lables.add("device3");
         lables.add("device4");
         lables.add("device5");
 
-        IAxisValueFormatter xAxisFormatter = new MyAxisArrayListValueFormatter(lables);
+        IAxisValueFormatter xAxisFormatter = new BarChartAxisArrayListValueFormatter(lables);
 
         xAxis.setGranularityEnabled(true);
         xAxis.setGranularity(1.0f); // only intervals of 1 day
-        xAxis.setLabelCount(4);
+        xAxis.setLabelCount(visibleGraphCount);
         xAxis.setValueFormatter(xAxisFormatter);
+        xAxis.setXOffset(-30f);
+        xAxis.setmMultiLineLabel(true);
 
         // now modify viewport
-        mChart.setVisibleXRangeMaximum(4); // allow 5 values to be displayed at once on the x-axis, not more
+        chart.setVisibleXRangeMaximum(visibleGraphCount); // allow 5 values to be displayed at once on the x-axis, not more
         // mChart.moveViewToX(0); // set the left edge of the chart to x-index 0
-// moveViewToX(...) also calls invalidate()
+        // moveViewToX(...) also calls invalidate()
 
         //mChart.fitScreen();
         // add a nice and smooth animation
-        mChart.animateY(1500);
-
+        chart.animateY(1500);
     }
 
-    private void setData(int count, float range) {
+    private void setData(BarChart chart, int count, float range) {
 
-        float start = 1f;
+        int start = 0;
 
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
 
-        for (int i = (int) start; i < start + count + 1; i++) {
+        for (int i = start; i < start + count + 1; i++) {
             float mult = (range + 1);
             float val = (float) (Math.random() * mult);
 
-            if (Math.random() * 100 < 25) {
-                yVals1.add(new BarEntry(i, val, getResources().getDrawable(R.drawable.star)));
-            } else {
-                yVals1.add(new BarEntry(i, val));
-            }
-        }
-
-        BarDataSet set1;
-
-        if (mChart.getData() != null &&
-                mChart.getData().getDataSetCount() > 0) {
-            set1 = (BarDataSet) mChart.getData().getDataSetByIndex(0);
-            set1.setValues(yVals1);
-            mChart.getData().notifyDataChanged();
-            mChart.notifyDataSetChanged();
-        } else {
-            set1 = new BarDataSet(yVals1, "The");
-            set1.setDrawIcons(false);
-            set1.setColors(Color.BLUE);
-            set1.setDrawValues(false);
-
-            ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
-            dataSets.add(set1);
-
-            BarData data = new BarData(dataSets);
-            data.setBarWidth(0.7f);
-
-            mChart.setData(data);
-            //mChart.setFitBars(true);
-        }
-
-        mChart.invalidate();
-    }
-    private void initialize(){
-        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
-        int count = 25;
-        for (int i = 0; i < count + 1; i++) {
-            float mult = (count + 1);
-            float val = (float) (Math.random() * mult) + mult / 3;
             yVals1.add(new BarEntry(i, val));
+
         }
 
         BarDataSet set1;
 
-        if (mChart.getData() != null &&
-                mChart.getData().getDataSetCount() > 0) {
-            set1 = (BarDataSet)mChart.getData().getDataSetByIndex(0);
-            set1.setValues(yVals1);
-            mChart.getData().notifyDataChanged();
-            mChart.notifyDataSetChanged();
-        } else {
-            set1 = new BarDataSet(yVals1, "Data Set");
-            set1.setColors(ColorTemplate.MATERIAL_COLORS);
-            set1.setDrawValues(false);
+        set1 = new BarDataSet(yVals1, "");
+        set1.setDrawIcons(false);
+        set1.setColor(Color.BLUE);
+        set1.setDrawValues(false);
 
-            ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
-            dataSets.add(set1);
+        ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
+        dataSets.add(set1);
 
-            BarData data = new BarData(dataSets);
-            mChart.setData(data);
-            mChart.setFitBars(true);
-        }
+        BarData data = new BarData(dataSets);
+        data.setBarWidth(0.6f);
 
-        mChart.invalidate();
-    }
+        chart.setData(data);
+        //mChart.setFitBars(true);
 
-
-    private void init2(){
-        ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry (1, 5));
-        ArrayList<BarEntry> entries2 = new ArrayList<>();
-        entries2.add(new BarEntry (3, 2));
-        ArrayList<BarEntry> entries3 = new ArrayList<>();
-        entries3.add(new BarEntry (5, 7));
-        ArrayList<BarEntry> entries4 = new ArrayList<>();
-        entries4.add(new BarEntry (7, 7));
-        ArrayList<BarEntry> entries5 = new ArrayList<>();
-        entries5.add(new BarEntry (9, 1));
-        List<IBarDataSet> bars = new ArrayList<IBarDataSet>();
-        BarDataSet dataset = new BarDataSet(entries, "First");
-        dataset.setColor(Color.RED);
-        dataset.setDrawValues(false);
-        bars.add(dataset);
-        BarDataSet dataset2 = new BarDataSet(entries2, "Second");
-        dataset2.setColor(Color.BLUE);
-        dataset2.setDrawValues(false);
-        bars.add(dataset2);
-        BarDataSet dataset3 = new BarDataSet(entries3, "Third");
-        dataset3.setColor(Color.GREEN);
-        dataset3.setDrawValues(false);
-        bars.add(dataset3);
-        BarDataSet dataset4 = new BarDataSet(entries4, "Fourth");
-        dataset4.setColor(Color.GRAY);
-        dataset4.setDrawValues(false);
-        bars.add(dataset4);
-        BarDataSet dataset5 = new BarDataSet(entries5, "Fifth");
-        dataset5.setColor(Color.BLACK);
-        dataset5.setDrawValues(false);
-        bars.add(dataset5);
-        BarData data = new BarData(bars);
-        mChart.setData(data);
-
-        // below is simply styling decisions on code that I have)
-        YAxis left = mChart.getAxisLeft();
-        left.setDrawLabels(false);
-        mChart.getAxisRight().setEnabled(false);
-        XAxis bottomAxis = mChart.getXAxis();
-        bottomAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-       // bottomAxis.setDrawLabels(false);
-        bottomAxis.setDrawGridLines(false);
+        //modify renderer to add icons.
+        ArrayList<String> imageList = new ArrayList<>();
+        imageList.add("\ue938");
+        imageList.add("\ue938");
+        imageList.add("\ue938");
+        imageList.add("\ue938");
+        imageList.add("\ue938");
+        chart.setScaleEnabled(false);
+        chart.setRenderer(new BarChartXAxisFontIconRenderer(chart, chart.getAnimator(), chart.getViewPortHandler(), imageList, getApplicationContext()));
+        chart.setExtraOffsets(0, 0, 0, 30);
+        //mChart.setFitBars(true);
 
 
+        chart.invalidate();
     }
 
     @Override
@@ -246,56 +185,56 @@ public class WiFiByDeviceActivity extends DemoBase  {
         switch (item.getItemId()) {
             case R.id.actionToggleValues: {
 
-                for (IDataSet set : mChart.getData().getDataSets())
+                for (IDataSet set : barChartDevices.getData().getDataSets())
                     set.setDrawValues(!set.isDrawValuesEnabled());
 
-                mChart.invalidate();
+                barChartDevices.invalidate();
                 break;
             }
             case R.id.actionToggleHighlight: {
 
-                if(mChart.getData() != null) {
-                    mChart.getData().setHighlightEnabled(!mChart.getData().isHighlightEnabled());
-                    mChart.invalidate();
+                if (barChartDevices.getData() != null) {
+                    barChartDevices.getData().setHighlightEnabled(!barChartDevices.getData().isHighlightEnabled());
+                    barChartDevices.invalidate();
                 }
                 break;
             }
             case R.id.actionTogglePinch: {
-                if (mChart.isPinchZoomEnabled())
-                    mChart.setPinchZoom(false);
+                if (barChartDevices.isPinchZoomEnabled())
+                    barChartDevices.setPinchZoom(false);
                 else
-                    mChart.setPinchZoom(true);
+                    barChartDevices.setPinchZoom(true);
 
-                mChart.invalidate();
+                barChartDevices.invalidate();
                 break;
             }
             case R.id.actionToggleAutoScaleMinMax: {
-                mChart.setAutoScaleMinMaxEnabled(!mChart.isAutoScaleMinMaxEnabled());
-                mChart.notifyDataSetChanged();
+                barChartDevices.setAutoScaleMinMaxEnabled(!barChartDevices.isAutoScaleMinMaxEnabled());
+                barChartDevices.notifyDataSetChanged();
                 break;
             }
             case R.id.actionToggleBarBorders: {
-                for (IBarDataSet set : mChart.getData().getDataSets())
-                    ((BarDataSet)set).setBarBorderWidth(set.getBarBorderWidth() == 1.f ? 0.f : 1.f);
+                for (IBarDataSet set : barChartDevices.getData().getDataSets())
+                    ((BarDataSet) set).setBarBorderWidth(set.getBarBorderWidth() == 1.f ? 0.f : 1.f);
 
-                mChart.invalidate();
+                barChartDevices.invalidate();
                 break;
             }
             case R.id.animateX: {
-                mChart.animateX(3000);
+                barChartDevices.animateX(3000);
                 break;
             }
             case R.id.animateY: {
-                mChart.animateY(3000);
+                barChartDevices.animateY(3000);
                 break;
             }
             case R.id.animateXY: {
 
-                mChart.animateXY(3000, 3000);
+                barChartDevices.animateXY(3000, 3000);
                 break;
             }
             case R.id.actionSave: {
-                if (mChart.saveToGallery("title" + System.currentTimeMillis(), 50)) {
+                if (barChartDevices.saveToGallery("title" + System.currentTimeMillis(), 50)) {
                     Toast.makeText(getApplicationContext(), "Saving SUCCESSFUL!",
                             Toast.LENGTH_SHORT).show();
                 } else

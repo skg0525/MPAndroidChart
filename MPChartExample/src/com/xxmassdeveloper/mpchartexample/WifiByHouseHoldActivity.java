@@ -2,17 +2,12 @@ package com.xxmassdeveloper.mpchartexample;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.XAxis.XAxisPosition;
 import com.github.mikephil.charting.components.YAxis;
@@ -24,7 +19,6 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.xxmassdeveloper.mpchartexample.custom.MyAxisValueFormatter;
 import com.xxmassdeveloper.mpchartexample.custom.MyValueFormatter;
 import com.xxmassdeveloper.mpchartexample.notimportant.DemoBase;
 
@@ -46,7 +40,8 @@ public class WifiByHouseHoldActivity extends DemoBase implements OnChartValueSel
 
         mChart.getDescription().setEnabled(false);
 
-        mChart.getLegend().setEnabled(false);
+
+        //mChart.getLegend().setEnabled(false);
 
         // if more than 60 entries are displayed in the chart, no values will be
         // drawn
@@ -61,7 +56,6 @@ public class WifiByHouseHoldActivity extends DemoBase implements OnChartValueSel
         //mChart.setDescription(new Description());
         //mChart.setBackgroundColor(Color.rgb(0, 0, 0));//Set as a black
         mChart.setDrawGridBackground(false);//set this to true to draw the grid background, false if not
-
 
 
         mChart.setDrawValueAboveBar(false);
@@ -178,15 +172,15 @@ public class WifiByHouseHoldActivity extends DemoBase implements OnChartValueSel
         return true;
     }
 
-    private void setup(){
+    private void setup() {
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
 
         int size = 6;
-        for (int i = 0; i <  size; i++) {
+        for (int i = 0; i < size; i++) {
             float mult = (size + 1);
             float val1 = (float) (Math.random() * mult) + mult / 3;
             float val2 = (float) (Math.random() * mult) + mult / 3;
-           // float val3 = (float) (Math.random() * mult) + mult / 3;
+            // float val3 = (float) (Math.random() * mult) + mult / 3;
 
             yVals1.add(new BarEntry(
                     i,
@@ -218,11 +212,12 @@ public class WifiByHouseHoldActivity extends DemoBase implements OnChartValueSel
             data.setValueFormatter(new MyValueFormatter());
             data.setValueTextColor(Color.WHITE);
             mChart.setData(data);
+
         }
 
         mChart.setFitBars(true);
         mChart.invalidate();
-       // mChart.setDrawGridBackground(true);
+        // mChart.setDrawGridBackground(true);
     }
 
     @Override
@@ -231,9 +226,9 @@ public class WifiByHouseHoldActivity extends DemoBase implements OnChartValueSel
         BarEntry entry = (BarEntry) e;
 
         //if (entry.getYVals() != null)
-           // Log.i("VAL SELECTED", "Value: " + entry.getYVals()[h.getStackIndex()]);
+        // Log.i("VAL SELECTED", "Value: " + entry.getYVals()[h.getStackIndex()]);
         //else
-          //  Log.i("VAL SELECTED", "Value: " + entry.getY());
+        //  Log.i("VAL SELECTED", "Value: " + entry.getY());
     }
 
     @Override
