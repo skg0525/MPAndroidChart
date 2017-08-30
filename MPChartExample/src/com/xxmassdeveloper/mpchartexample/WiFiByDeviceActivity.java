@@ -46,6 +46,7 @@ public class WiFiByDeviceActivity extends DemoBase {
         //POST styling
         barChartPostDataStyling(barChartDevices);
 
+
     }
 
     /*
@@ -53,8 +54,14 @@ public class WiFiByDeviceActivity extends DemoBase {
     * This method is used to style the bar before setting data
     */
     private void barChartPreDataStyling(BarChart chart) {
+
+        //SET rounded bars.
+        barChartDevices.setRoundedBar(true);
+
         chart.getDescription().setEnabled(false);
         //chart.getLegend().setEnabled(false);
+
+        //Hide legend.
         LegendEntry l = new LegendEntry("", Legend.LegendForm.NONE, Float.NaN, Float.NaN, null, Color.BLACK);
         LegendEntry[] array = new LegendEntry[1];
         array[0] = l;
@@ -68,8 +75,6 @@ public class WiFiByDeviceActivity extends DemoBase {
         chart.setDoubleTapToZoomEnabled(false);
 
         chart.setDrawBarShadow(false);
-        //mChart.setDescription(new Description());
-        //mChart.setBackgroundColor(Color.rgb(0, 0, 0));//Set as a black
         chart.setDrawGridBackground(false);//set this to true to draw the grid background, false if not
 
     }
@@ -122,6 +127,9 @@ public class WiFiByDeviceActivity extends DemoBase {
         // mChart.moveViewToX(0); // set the left edge of the chart to x-index 0
         // moveViewToX(...) also calls invalidate()
 
+        //SET rounded bars. this is causing problem, so making rounded bar by default inside barchart
+        //chart.setRoundedBar(true);
+
         //mChart.fitScreen();
         // add a nice and smooth animation
         chart.animateY(1500);
@@ -165,7 +173,7 @@ public class WiFiByDeviceActivity extends DemoBase {
         imageList.add("\ue938");
         imageList.add("\ue938");
         chart.setScaleEnabled(false);
-        chart.setRenderer(new BarChartXAxisFontIconRenderer(chart, chart.getAnimator(), chart.getViewPortHandler(), imageList, getApplicationContext()));
+        chart.setRenderer(new BarChartXAxisFontIconRenderer(chart, chart.getAnimator(), chart.getViewPortHandler(), imageList, getApplicationContext(), true));
         chart.setExtraOffsets(0, 0, 0, 30);
         //mChart.setFitBars(true);
 

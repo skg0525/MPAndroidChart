@@ -36,6 +36,11 @@ public class BarChart extends BarLineChartBase<BarData> implements BarDataProvid
      */
     private boolean mDrawBarShadow = false;
 
+    /**
+     * if set to true, the bar chart's bars would be round on all corners instead of rectangular
+     */
+ 	private boolean mDrawRoundedBars = false;
+
     private boolean mFitBars = false;
 
     public BarChart(Context context) {
@@ -54,7 +59,7 @@ public class BarChart extends BarLineChartBase<BarData> implements BarDataProvid
     protected void init() {
         super.init();
 
-        mRenderer = new BarChartRenderer(this, mAnimator, mViewPortHandler);
+        mRenderer = new BarChartRenderer(this, mAnimator, mViewPortHandler, mDrawRoundedBars);
 
         setHighlighter(new BarHighlighter(this));
 
@@ -234,6 +239,16 @@ public class BarChart extends BarLineChartBase<BarData> implements BarDataProvid
      */
     public void setFitBars(boolean enabled) {
         mFitBars = enabled;
+    }
+
+    /**
+     * Used to enable rounded bar chart bars and set the radius of the rounded bars
+     *
+     * @param mDrawRoundedBars - the boolean to set rounder or square bar
+     */
+    public void setRoundedBar(boolean mDrawRoundedBars) {
+        this.mDrawRoundedBars = mDrawRoundedBars;
+        init();
     }
 
     /**

@@ -32,7 +32,7 @@ public class HorizontalBarChartRenderer extends BarChartRenderer {
 
     public HorizontalBarChartRenderer(BarDataProvider chart, ChartAnimator animator,
                                       ViewPortHandler viewPortHandler) {
-        super(chart, animator, viewPortHandler);
+        super(chart, animator, viewPortHandler,false);
 
         mValuePaint.setTextAlign(Align.LEFT);
     }

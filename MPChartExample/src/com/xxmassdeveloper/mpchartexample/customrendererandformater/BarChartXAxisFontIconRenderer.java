@@ -26,8 +26,8 @@ public class BarChartXAxisFontIconRenderer extends BarChartRenderer {
     private Context context;
     private ArrayList<String> imageFontList;
 
-    public BarChartXAxisFontIconRenderer(BarDataProvider chart, ChartAnimator animator, ViewPortHandler viewPortHandler, ArrayList<String> imageList, Context context) {
-        super(chart, animator, viewPortHandler);
+    public BarChartXAxisFontIconRenderer(BarDataProvider chart, ChartAnimator animator, ViewPortHandler viewPortHandler, ArrayList<String> imageList, Context context, boolean mRoundedBars) {
+        super(chart, animator, viewPortHandler,mRoundedBars);
         this.context = context;
         this.imageFontList = imageList;
     }

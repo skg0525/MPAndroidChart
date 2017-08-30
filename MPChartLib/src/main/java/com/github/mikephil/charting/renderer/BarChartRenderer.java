@@ -35,11 +35,16 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
 
     protected Paint mShadowPaint;
     protected Paint mBarBorderPaint;
+    /**
+     * if set to true, the bar chart's bars would be round on all corners instead of rectangular
+     */
+    private boolean mDrawRoundedBars = false;
 
     public BarChartRenderer(BarDataProvider chart, ChartAnimator animator,
-                            ViewPortHandler viewPortHandler) {
+                            ViewPortHandler viewPortHandler, boolean mDrawRoundedBars) {
         super(animator, viewPortHandler);
         this.mChart = chart;
+        this.mDrawRoundedBars = mDrawRoundedBars;
 
         mHighlightPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mHighlightPaint.setStyle(Paint.Style.FILL);
@@ -130,7 +135,7 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
                 mBarShadowRectBuffer.bottom = mViewPortHandler.contentBottom();
 
                 float mRadius = (mBarShadowRectBuffer.right - mBarShadowRectBuffer.left)/2;
-                if (mRadius > 0.0f)
+                if (mDrawRoundedBars)
                     c.drawRoundRect(mBarShadowRectBuffer, mRadius, mRadius, mShadowPaint);
                 else
                     c.drawRect(mBarShadowRectBuffer, mShadowPaint);
@@ -169,7 +174,7 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
             }
 
             float mRadius = buffer.buffer[j];
-            if (mRadius > 0)
+            if (mDrawRoundedBars)
                 c.drawRoundRect(new RectF(buffer.buffer[j], buffer.buffer[j + 1], buffer.buffer[j + 2],
                         buffer.buffer[j + 3]), mRadius, mRadius, mRenderPaint);
             else
@@ -177,7 +182,7 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
                     buffer.buffer[j + 3], mRenderPaint);
 
             if (drawBorder) {
-                if (mRadius > 0.0f)
+                if (mDrawRoundedBars)
                     c.drawRoundRect(new RectF(buffer.buffer[j], buffer.buffer[j + 1], buffer.buffer[j + 2],
                             buffer.buffer[j + 3]), mRadius, mRadius, mBarBorderPaint);
                 else
@@ -480,7 +485,7 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
             setHighlightDrawPos(high, mBarRect);
 
             float mRadius = barData.getBarWidth();
-            if (mRadius > 0.0f)
+            if (mDrawRoundedBars)
                 c.drawRoundRect(mBarRect,mRadius, mRadius, mHighlightPaint);
             else
                 c.drawRect(mBarRect, mHighlightPaint);

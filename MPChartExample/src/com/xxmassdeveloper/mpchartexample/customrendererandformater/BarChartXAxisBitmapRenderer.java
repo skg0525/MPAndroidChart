@@ -27,8 +27,8 @@ public class BarChartXAxisBitmapRenderer extends BarChartRenderer {
     private Context context;
     private ArrayList<Bitmap> imageList;
 
-    public BarChartXAxisBitmapRenderer(BarDataProvider chart, ChartAnimator animator, ViewPortHandler viewPortHandler, ArrayList<Bitmap> imageList, Context context) {
-        super(chart, animator, viewPortHandler);
+    public BarChartXAxisBitmapRenderer(BarDataProvider chart, ChartAnimator animator, ViewPortHandler viewPortHandler, ArrayList<Bitmap> imageList, Context context, boolean mRoundedBars) {
+        super(chart, animator, viewPortHandler,mRoundedBars);
         this.context = context;
         this.imageList = imageList;
     }
