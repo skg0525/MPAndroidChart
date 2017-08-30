@@ -24,7 +24,7 @@ import com.xxmassdeveloper.mpchartexample.notimportant.DemoBase;
 
 import java.util.ArrayList;
 
-public class WiFiByDeviceActivity extends DemoBase {
+public class RoundedIconBarChartActivity extends DemoBase {
 
     private BarChart barChartDevices;
 
@@ -33,7 +33,7 @@ public class WiFiByDeviceActivity extends DemoBase {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_wifibydevice);
+        setContentView(R.layout.activity_rounded_bar_chart_icon);
 
         barChartDevices = (BarChart) findViewById(R.id.chart1);
 

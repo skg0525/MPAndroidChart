@@ -25,7 +25,7 @@ import com.xxmassdeveloper.mpchartexample.notimportant.DemoBase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WifiByHouseHoldActivity extends DemoBase implements OnChartValueSelectedListener {
+public class RoundedBarWithShadowChartActivity extends DemoBase implements OnChartValueSelectedListener {
 
     private BarChart mChart;
 
@@ -33,7 +33,7 @@ public class WifiByHouseHoldActivity extends DemoBase implements OnChartValueSel
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_wifibydevice);
+        setContentView(R.layout.activity_rounded_bar_chart_icon);
 
         mChart = (BarChart) findViewById(R.id.chart1);
         mChart.setOnChartValueSelectedListener(this);

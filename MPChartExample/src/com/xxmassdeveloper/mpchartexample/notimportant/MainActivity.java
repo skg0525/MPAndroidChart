@@ -45,8 +45,8 @@ import com.xxmassdeveloper.mpchartexample.ScatterChartActivity;
 import com.xxmassdeveloper.mpchartexample.ScrollViewActivity;
 import com.xxmassdeveloper.mpchartexample.StackedBarActivity;
 import com.xxmassdeveloper.mpchartexample.StackedBarActivityNegative;
-import com.xxmassdeveloper.mpchartexample.WiFiByDeviceActivity;
-import com.xxmassdeveloper.mpchartexample.WifiByHouseHoldActivity;
+import com.xxmassdeveloper.mpchartexample.RoundedIconBarChartActivity;
+import com.xxmassdeveloper.mpchartexample.RoundedBarWithShadowChartActivity;
 import com.xxmassdeveloper.mpchartexample.fragments.SimpleChartDemo;
 import com.xxmassdeveloper.mpchartexample.realm.RealmMainActivity;
 
@@ -299,11 +299,11 @@ public class MainActivity extends Activity implements OnItemClickListener {
                 startActivity(i);
                 break;
             case 32:
-                i = new Intent(this, WiFiByDeviceActivity.class);
+                i = new Intent(this, RoundedIconBarChartActivity.class);
                 startActivity(i);
                 break;
             case 33:
-                i = new Intent(this, WifiByHouseHoldActivity.class);
+                i = new Intent(this, RoundedBarWithShadowChartActivity.class);
                 startActivity(i);
                 break;
         }
